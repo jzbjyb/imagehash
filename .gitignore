@@ -1,3 +1,6 @@
 *.pyc
 env
 *.jpg
+build
+dist
+ImageHashCache.egg-info

@@ -1,11 +1,12 @@
-ImageHash
+ImageHashCache
 ===========
 
-A image hashing library written in Python. ImageHash supports:
+A image hashing library written in Python. ImageHashCache supports:
 
 * average hashing (`aHash`_)
 * perception hashing (`pHash`_)
 * difference hashing (`dHash`_)
+* caching resized images
 
 Requirements
 -------------
@@ -31,7 +32,7 @@ Basic usage
 
 The demo script **find_similar_images** illustrates how to find similar images in a directory.
 
-Source hosted at github: https://github.com/JohannesBuchner/imagehash
+Source hosted at github: https://github.com/jzbjyb/imagehash
 
 .. _aHash: http://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html
 .. _pHash: http://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html

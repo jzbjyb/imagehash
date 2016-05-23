@@ -8,15 +8,15 @@ with open('README.rst') as f:
     long_description = f.read()
 
 setup(
-    name='ImageHash',
+    name='ImageHashCache',
     version='1.0',
-    author='Johannes Buchner',
-    author_email='buchner.johannes@gmx.at',
-    packages=['imagehash'],
+    author='Zhengbao Jiang',
+    author_email='rucjzb@163.com',
+    packages=['imagehashcache'],
     scripts=['find_similar_images.py'],
-    url='https://github.com/JohannesBuchner/imagehash',
+    url='https://github.com/jzbjyb/imagehash',
     license='LICENSE',
-    description='Image Hashing library',
+    description='Image Hashing Library with Cache',
     long_description=long_description,
     install_requires=[
         "scipy",
