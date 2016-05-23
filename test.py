@@ -1,16 +1,17 @@
 from __future__ import print_function
 from PIL import Image
-import imagehash
+import imagehash, os
 
 filename = 'testfile.jpg'
 
 def retrieve_example():
 	import os
 	if not os.path.exists(filename):
-		url = 'http://lh5.googleusercontent.com/-0iu4m4njVmQ/S3YH3wwXuPI/AAAAAAAABeU/i8jX5uKGCFo/s800/Alyson_Hannigan_200512.jpg'
+		url = 'http://www.liaoxuefeng.com/files/attachments/001407671964310a6b503be6fcb4648928e2e4c522d04c7000'
 		import urllib2
 		response = urllib2.urlopen(url)
 		open(filename, 'w').write(response.read())
+		print('download test image over')
 	return Image.open(filename)
 
 def run_hash_algorithm(algo):
@@ -35,8 +36,8 @@ def run_hash_algorithm(algo):
 
 def run_hash_algorithm_with_cache(algo):
 	img = retrieve_example()
-	hash = algo(img, cache=True, path='test_cache.jpg', func=lambda path: 'cache' + os.sep + path)
-	img_cache = Image.open('cache' + os.sep + path)
+	hash = algo(img, cache=True, path='test_cache.jpg', trans_func=lambda path: 'cache' + os.sep + path)
+	img_cache = Image.open('cache' + os.sep + 'test_cache.jpg')
 	img.show()
 	img_cache.show()
  
@@ -50,6 +51,7 @@ def test_phash():
 	run_hash_algorithm(imagehash.phash)
 
 def test_average_hash_cache():
+	print(1)
 	run_hash_algorithm_with_cache(imagehash.average_hash)
 
 

@@ -33,7 +33,7 @@ Rotation by 26: 21 Hamming difference
 from PIL import Image
 import numpy
 import scipy.fftpack
-from util import resize
+from .util import resize
 
 def _binary_array_to_hex(arr):
 	"""
@@ -98,7 +98,7 @@ def hex_to_hash(hexstr):
 	return ImageHash(numpy.array(l))
 
 
-def average_hash(image, hash_size=8, *kwargs):
+def average_hash(image, hash_size=8, **kwargs):
 	"""
 	Average Hash computation
 
@@ -114,7 +114,7 @@ def average_hash(image, hash_size=8, *kwargs):
 	# make a hash
 	return ImageHash(diff)
 
-def phash(image, hash_size=8, highfreq_factor=4):
+def phash(image, hash_size=8, highfreq_factor=4, **kwargs):
 	"""
 	Perceptual Hash computation.
 
@@ -123,7 +123,7 @@ def phash(image, hash_size=8, highfreq_factor=4):
 	@image must be a PIL instance.
 	"""
 	img_size = hash_size * highfreq_factor
-	image = image.convert("L").resize((img_size, img_size), Image.ANTIALIAS)
+	image = resize(img_size, img_size, **kwargs)
 	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((img_size, img_size))
 	dct = scipy.fftpack.dct(scipy.fftpack.dct(pixels, axis=0), axis=1)
 	dctlowfreq = dct[:hash_size, :hash_size]
@@ -131,7 +131,7 @@ def phash(image, hash_size=8, highfreq_factor=4):
 	diff = dctlowfreq > med
 	return ImageHash(diff)
 
-def phash_simple(image, hash_size=8, highfreq_factor=4):
+def phash_simple(image, hash_size=8, highfreq_factor=4, **kwargs):
 	"""
 	Perceptual Hash computation.
 
@@ -140,7 +140,7 @@ def phash_simple(image, hash_size=8, highfreq_factor=4):
 	@image must be a PIL instance.
 	"""
 	img_size = hash_size * highfreq_factor
-	image = image.convert("L").resize((img_size, img_size), Image.ANTIALIAS)
+	image = resize(img_size, img_size, **kwargs)
 	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((img_size, img_size))
 	dct = scipy.fftpack.dct(pixels)
 	dctlowfreq = dct[:hash_size, 1:hash_size+1]
@@ -148,7 +148,7 @@ def phash_simple(image, hash_size=8, highfreq_factor=4):
 	diff = dctlowfreq > avg
 	return ImageHash(diff)
 
-def dhash(image, hash_size=8):
+def dhash(image, hash_size=8, **kwargs):
 	"""
 	Difference Hash computation.
 
@@ -156,7 +156,7 @@ def dhash(image, hash_size=8):
 
 	@image must be a PIL instance.
 	"""
-	image = image.convert("L").resize((hash_size + 1, hash_size), Image.ANTIALIAS)
+	image = resize(hash_size + 1, hash_size, **kwargs)
 	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size + 1, hash_size))
 	# compute differences
 	diff = pixels[1:, :] > pixels[:-1, :]

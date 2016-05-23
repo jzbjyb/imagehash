@@ -10,12 +10,12 @@ def resize(image, width, height, **kwargs):
 		'path': None
 	}
 	default.update(kwargs)
-	if default['cache'] and hasattr(default['trans_func'], '__call__') and default['path'] != None and os.path.exist(default['trans_func'](default['path'])):
-		return Image.open(default['path'])
+	if default['cache'] and hasattr(default['trans_func'], '__call__') and default['path'] != None and os.path.exists(default['trans_func'](default['path'])):
+		return Image.open(default['trans_func'](default['path']))
 	image = image.convert("L").resize((width, height), Image.ANTIALIAS)
 	if default['cache'] and hasattr(default['trans_func'], '__call__') and default['path'] != None:
 		path = default['trans_func'](default['path'])
-		if not os.path.exist(os.path.dirname(path)):
+		if not os.path.exists(os.path.dirname(path)):
 			os.mkdir(os.path.dirname(path))
 		image.save(path)
 	return image
