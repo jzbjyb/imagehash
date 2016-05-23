@@ -33,6 +33,13 @@ def run_hash_algorithm(algo):
 	assert hash != otherhash, ('rotated image should have different hash', hash, otherhash)
 	assert hash - otherhash > 10, ('rotated image should have different hash', hash, otherhash)
 
+def run_hash_algorithm_with_cache(algo):
+	img = retrieve_example()
+	hash = algo(img, cache=True, path='test_cache.jpg', func=lambda path: 'cache' + os.sep + path)
+	img_cache = Image.open('cache' + os.sep + path)
+	img.show()
+	img_cache.show()
+ 
 def test_average_hash():
 	run_hash_algorithm(imagehash.average_hash)
 
@@ -41,6 +48,9 @@ def test_dhash():
 
 def test_phash():
 	run_hash_algorithm(imagehash.phash)
+
+def test_average_hash_cache():
+	run_hash_algorithm_with_cache(imagehash.average_hash)
 
 
 def test_average_hash_length():

@@ -33,6 +33,7 @@ Rotation by 26: 21 Hamming difference
 from PIL import Image
 import numpy
 import scipy.fftpack
+from util import resize
 
 def _binary_array_to_hex(arr):
 	"""
@@ -97,7 +98,7 @@ def hex_to_hash(hexstr):
 	return ImageHash(numpy.array(l))
 
 
-def average_hash(image, hash_size=8):
+def average_hash(image, hash_size=8, *kwargs):
 	"""
 	Average Hash computation
 
@@ -105,7 +106,8 @@ def average_hash(image, hash_size=8):
 
 	@image must be a PIL instance.
 	"""
-	image = image.convert("L").resize((hash_size, hash_size), Image.ANTIALIAS)
+	#image = image.convert("L").resize((hash_size, hash_size), Image.ANTIALIAS)
+	image = resize(image, hash_size, hash_size, **kwargs)
 	pixels = numpy.array(image.getdata()).reshape((hash_size, hash_size))
 	avg = pixels.mean()
 	diff = pixels > avg
